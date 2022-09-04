@@ -1,4 +1,5 @@
 {
+   "exclude": ["./coverage", "./dist", "__tests__", "jest.config.ts"],
    "compilerOptions": {
       "lib": [
          "es5",
