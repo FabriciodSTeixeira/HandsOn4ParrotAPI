@@ -1,3 +1,4 @@
+import { checkRole } from './../middlewares/checkRole';
 import {Router} from "express";
 import { UserController } from "../controller/UserController";
 
@@ -11,6 +12,6 @@ router.post("/", UserController.newUser);
 
 router.put("/:id([0-9]+)", UserController.editUser);
 
-router.delete("/:id([0-9]+)", UserController.deleteUser); //Tem que ser admin
+router.delete("/:id([0-9]+)",checkRole(["ADMIN"]), UserController.deleteUser); //Tem que ser admin
 
 export default router;

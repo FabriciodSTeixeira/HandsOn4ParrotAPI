@@ -1,6 +1,8 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+import { Post } from "./entity/Post"
 import { User } from "./entity/User"
+import {CreateUser1662331509576} from "./migration/1662331509576-CreateUser";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -9,9 +11,9 @@ export const AppDataSource = new DataSource({
     username: "root",
     password: "root",
     database: "parrotapi",
-    synchronize: false,
+    synchronize: true,
     logging: false,
-    entities: [User],
-    migrations: [],
+    entities: [User,Post],
+    migrations: [CreateUser1662331509576],
     subscribers: [],
 })

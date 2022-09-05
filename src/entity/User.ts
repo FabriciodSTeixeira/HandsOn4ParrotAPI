@@ -27,6 +27,10 @@ export class User {
     password: string
 
     @Column()
+    @IsNotEmpty()
+    role:string
+
+    @Column()
     @CreateDateColumn()
     createdAt: Date
 
@@ -38,7 +42,7 @@ export class User {
     post: Post[]
 
     hashPassword(){
-        this.password = bcrypt.hashSync(this.password, 8)
+        return this.password = bcrypt.hashSync(this.password, 8)
     }
 
     checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {

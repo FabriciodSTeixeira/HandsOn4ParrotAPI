@@ -1,3 +1,4 @@
+import { checkRole } from './../middlewares/checkRole';
 import {Router} from "express";
 import { PostController } from "../controller/PostController";
 
@@ -11,6 +12,6 @@ router.post("/", PostController.newPost);
 
 router.put("/:id([0-9]+)", PostController.editPost);
 
-router.delete("/:id([0-9]+)", PostController.deletePost); //Tem que ser do usuario logado
+router.delete("/:id([0-9]+)",checkRole(["ADMIN"]), PostController.deletePost); //Tem que ser do usuario logado
 
 export default router;

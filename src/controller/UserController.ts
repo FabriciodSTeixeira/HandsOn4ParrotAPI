@@ -33,12 +33,14 @@ export class UserController {
 
         let user : User = new User();
 
-        const hashedPassword = bcrypt.hashSync(password, 8);
-
+        
         user.name = name;
         user.email = email;
         user.apartment = apartment;
-        user.password = hashedPassword;
+        user.password = password;
+        user.role = "MORADOR";
+
+        user.hashPassword();
 
         const validationErrors = await validate(user)
         if(validationErrors.length >0){
@@ -63,7 +65,7 @@ export class UserController {
         let user:User;
 
         try{
-            user = await userRepository.findOneOrFail({where:id});
+            user = await userRepository.findOneOrFail({where:{id}});
         }catch(error){
             return res.status(404).send("User not found")
         };
@@ -98,7 +100,7 @@ export class UserController {
         let user:User;
 
         try{
-            user = await userRepository.findOneOrFail({where:id});
+            user = await userRepository.findOneOrFail({where:{id}});
         }catch(error){
             return res.status(404).send("User not found")
         };

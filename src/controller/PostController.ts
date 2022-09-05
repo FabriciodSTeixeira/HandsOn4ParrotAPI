@@ -38,7 +38,7 @@ export class PostController{
         post.content = content;
         post.user = user;
 
-        const validationErrors = await validate(user)
+        const validationErrors = await validate(post)
         if(validationErrors.length >0){
             return res.status(400).send(validationErrors);
         };
@@ -52,4 +52,49 @@ export class PostController{
         return res.status(201).send("Post Created");
     }
 
+    static editPost = async (req:Request, res:Response) =>{
+        const id :any = req.params.id;
+
+        const {content} = req.body;
+
+        let post: Post;
+        try {
+            post = await postRepository.findOneOrFail({where: id})
+        } catch (error) {
+            return res.status(404).send("User not found")
+        };
+        
+        if(content) {
+            post.content = content
+        };
+
+        const validationErrors = await validate(post)
+        if(validationErrors.length >0){
+            return res.status(400).send(validationErrors);
+        };
+
+        try{
+            await postRepository.save(post);
+        }catch(error){
+            return res.status(400).send(error)
+        };
+
+        return res.status(200).send("Post updated");
+    }
+
+    static deletePost = async (req: Request, res: Response) => {
+        const id:any = req.params.id;
+
+        let post: Post;
+
+        try {
+            post = await postRepository.findOneOrFail({where: id})
+        } catch(error) {
+            return res.status(404).send("Post not found")
+        };
+
+        postRepository.delete(id);
+
+        return res.status(204).send();
+    };
 };
