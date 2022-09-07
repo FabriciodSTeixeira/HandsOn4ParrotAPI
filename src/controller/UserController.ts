@@ -2,7 +2,7 @@ import { validate } from "class-validator";
 import * as jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { User } from "../entity/User";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../database/data-source";
 import config from "../config/config";
 
 const userRepository = AppDataSource.getRepository(User);

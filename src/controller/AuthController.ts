@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import * as jwt from "jsonwebtoken";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../database/data-source";
 
 import { User } from "../entity/User";
 import config from "../config/config";

@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { Post } from "../entity/Post";
 import { User } from "../entity/User";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../database/data-source";
 import config from "../config/config";
 
 const postRepository = AppDataSource.getRepository(Post);

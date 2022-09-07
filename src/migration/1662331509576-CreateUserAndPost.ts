@@ -1,5 +1,5 @@
 import {     MigrationInterface,QueryRunner, Table, TableColumn, TableForeignKey} from "typeorm";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../database/data-source";
 
 export class CreateUserAndPost1662331509576 implements MigrationInterface {
 
