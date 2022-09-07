@@ -3,6 +3,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import routes from "./routes";
 import {AppDataSource} from "./data-source";
+import * as cors from "cors";
+import helmet from "helmet";
 
 
 //Chamando e iniciando o DB
@@ -12,13 +14,16 @@ AppDataSource.initialize()
 
         //call middlewares
         app.use(bodyParser.json());
-
+        app.use(cors());
+        app.use(helmet());
 
         //chamar as rotas da pasta router
         app.use("/",routes);
 
-        app.listen(3033,()=>{
-            console.log("Server started, running on port 3033");
+        const port = process.env.PORT || 3033;
+
+        app.listen(port,()=>{
+            console.log(`Server started, running on port ${port}`);
         });
     })
     .catch((error)=> console.log(error))

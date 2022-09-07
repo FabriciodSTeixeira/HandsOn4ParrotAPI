@@ -1,8 +1,9 @@
 import { validate } from "class-validator";
-import * as bcrypt from "bcryptjs";
+import * as jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
+import config from "../config/config";
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -25,6 +26,27 @@ export class UserController {
             return res.status(404).send("user not found");
         }
 
+        return res.status(200).send(user);
+    }
+
+    static getUserInfoFromToken = async(req:Request, res:Response) =>{
+        const userAuth = <string>req.headers["auth"];
+
+        let user = {};
+
+        try{
+            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
+            user = {
+                userId: parseInt(jwtPayLoad.id), 
+                email: jwtPayLoad.email,
+                name: jwtPayLoad.name,
+                apartment: jwtPayLoad.apartment
+            }
+        }catch(error){
+            return res.status(401).send();
+        }
+
+        console.log(user);
         return res.status(200).send(user);
     }
 

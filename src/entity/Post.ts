@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"
 import {Length, IsNotEmpty} from "class-validator";
 import { User } from "./User";
 
@@ -21,6 +21,8 @@ export class Post {
     updatedAt: Date
 
     @ManyToOne(()=> User, (user) => user.post)
-    user:User
+
+    @JoinColumn({ name: 'user_iduser' })
+    user: User
 
 };

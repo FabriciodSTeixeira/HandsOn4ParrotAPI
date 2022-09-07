@@ -11,16 +11,18 @@ const userRepository = AppDataSource.getRepository(User);
 class AuthController {
 
     static login = async (req: Request, res: Response) => {
-        let {name, password} = req.body
+        let {email, password} = req.body
 
-        if(!(name && password)) {
+        const isValidUser = await userRepository.findOneBy({email});
+
+        if(!(isValidUser && password)) {
             return res.status(404).send()
         }
 
         let user: User
 
         try {
-            user = await userRepository.findOneOrFail({where: {name}})
+            user = await userRepository.findOneOrFail({where: {email}})
         } catch (error) {
             return res.status(401).send("User not found!")
         }
@@ -30,7 +32,13 @@ class AuthController {
         }
 
         const token = jwt.sign(
-            {userid: user.id, username: user.name},
+            {
+            id: user.id, 
+            email: user.email,
+            name: user.name,
+            apartment: user.apartment,
+            role: user.role
+        },
             config.jwtSecret,
             {expiresIn: "1h"}
         )

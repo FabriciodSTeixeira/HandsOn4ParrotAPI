@@ -10,3 +10,5 @@
 -- npm install -s class-validator
 
 -- npm i -s bcryptjs
+-- npm i --save jwt-simple 
+-- npm i --save-dev @types/jwt-simple

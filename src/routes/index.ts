@@ -7,7 +7,7 @@ const routes= Router();
 
 routes.use("/user", user);
 routes.use('/auth', auth);
-routes.use("/post",post);
+routes.use("/post", post);
 
 
 export default routes;
