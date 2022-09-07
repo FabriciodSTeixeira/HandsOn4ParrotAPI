@@ -27,16 +27,16 @@ export class PostController{
     static getAllPostsByUserId = async (req:Request, res:Response) =>{
         const userAuth = <string>req.headers["auth"];
 
-        let idUser
+        let id
 
         try{
             const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
-            idUser = jwtPayLoad.id
+            id = jwtPayLoad.id
         }catch(error){
             return res.status(401).send();
         }
 
-        const user = userRepository.findOneOrFail({where:{id:idUser}})
+        const user = userRepository.findOneOrFail({where:{id:id}})
 
         if (!user){
             return res.status(404).send("User Not Found");
@@ -47,11 +47,11 @@ export class PostController{
             let posts = await postRepository.find({
                 where:{
                     user:{
-                        id:idUser
+                        id:id
                     }
                 }
             })
-            return res.status(200).send(posts);
+             res.status(200).send(posts);
         }catch(error){
             return res.status(404).send("Id Not Found");
         }
@@ -62,19 +62,21 @@ export class PostController{
     static newPost = async (req:Request, res:Response) =>{
         const userAuth = <string>req.headers["auth"];
 
-        let userId
+        let id;
 
         try{
             const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
-            userId = jwtPayLoad.id
+            id = jwtPayLoad.id
         }catch(error){
             return res.status(401).send();
         }
 
-        const user = await userRepository.findOneBy(userId);
+        const user = await userRepository.findOneOrFail({where:{id : id}});
 
+        console.log(id);
         const { content } = req.body;
 
+        console.log(user);
         if (!user) {
             return res.status(404).json({message:"User not found."})
         };
@@ -96,7 +98,7 @@ export class PostController{
 
         let post: Post;
         try {
-            post = await postRepository.findOneOrFail({where: id})
+            post = await postRepository.findOneOrFail({where:{id : id}})
         } catch (error) {
             return res.status(404).send("User not found")
         };
@@ -125,7 +127,7 @@ export class PostController{
         let post: Post;
 
         try {
-            post = await postRepository.findOneOrFail({where: id})
+            post = await postRepository.findOneOrFail({where: {id:id}})
         } catch(error) {
             return res.status(404).send("Post not found")
         };

@@ -6,9 +6,9 @@ const router = Router();
 
 router.get("/", checkIfAdmin, UserController.getAllUsers);  //Tem que ser admin
 
-router.get("/:id([0-9]+)", UserController.getOneUserById);
+router.get("/:id([0-9]+)",checkIfAdmin, UserController.getOneUserById);
 
-router.get("/info/:id([0-9]+)", UserController.getUserInfoFromToken);
+router.get("/info/", UserController.getUserInfoFromToken);
 
 router.post("/", UserController.newUser);
 
