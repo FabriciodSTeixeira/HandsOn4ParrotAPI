@@ -1,7 +1,13 @@
 # Hands On 4  - Rede Social Parrot -
  
+ Grupo 4 - 
+ [Fabrício Teixeira](https://github.com/FabriciodSTeixeira)
+ [Thalita](https://github.com/pereirathalita)
+ 
+ 
 ![Gama Academy](https://storage.gama.academy/logo.svg)
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Parrot%20Api&uri=https%3A%2F%2Fgithub.com%2FFabriciodSTeixeira%2FHandsOn4ParrotAPI%2Fblob%2Fmain%2Fdocs%2FInsomnia.json)
 
  Este projeto proposto pela equipe da Gama Academy durante o XP 43 consiste em criar uma rede social fictícia de um condomínio, dividindo a equipe em duas partes: Front-end e Back-end.
 
