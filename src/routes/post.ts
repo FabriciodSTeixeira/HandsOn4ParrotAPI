@@ -5,9 +5,9 @@ const router = Router();
 
 router.get("/", PostController.getAllPosts); 
 
-router.get("/:id([0-9]+)", PostController.getAllPostsByUserId);
+router.get("/all-posts", PostController.getAllPostsByUserId);
 
-router.post("/:id([0-9]+)", PostController.newPost);
+router.post("/new", PostController.newPost);
 
 router.put("/:id([0-9]+)", PostController.editPost);
 

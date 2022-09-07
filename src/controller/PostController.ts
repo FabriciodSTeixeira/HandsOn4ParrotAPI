@@ -22,10 +22,20 @@ export class PostController{
         });
 
         return res.status(200).send(posts);
-    }
+    };
 
     static getAllPostsByUserId = async (req:Request, res:Response) =>{
-        const idUser : any = req.params.id
+        const userAuth = <string>req.headers["auth"];
+
+        let idUser
+
+        try{
+            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
+            idUser = jwtPayLoad.id
+        }catch(error){
+            return res.status(401).send();
+        }
+
         const user = userRepository.findOneOrFail({where:{id:idUser}})
 
         if (!user){
@@ -47,7 +57,7 @@ export class PostController{
         }
 
         return res.status(200).send(posts);
-    }
+    };
 
     static newPost = async (req:Request, res:Response) =>{
         const userAuth = <string>req.headers["auth"];
@@ -77,7 +87,7 @@ export class PostController{
         await postRepository.save(newPost);
 
         return res.status(201).send("Post Created");
-        };
+    };
 
     static editPost = async (req:Request, res:Response) =>{
         const id :any = req.params.id;
@@ -107,7 +117,7 @@ export class PostController{
         };
 
         return res.status(200).send("Post updated");
-    }
+    };
 
     static deletePost = async (req: Request, res: Response) => {
         const id:any = req.params.id;

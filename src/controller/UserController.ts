@@ -9,47 +9,6 @@ const userRepository = AppDataSource.getRepository(User);
 
 export class UserController {
 
-    static getAllUsers = async (req:Request, res:Response)=>{
-        const users = await userRepository.find();
-    
-        return res.status(200).send(users);
-    
-        };
-
-    static getOneUserById = async (req:Request,res:Response)=>{
-        const id:any = req.params.id;
-
-        let user:User;
-        try{
-            user = await userRepository.findOneOrFail({where:{id}});
-        }catch(error){
-            return res.status(404).send("user not found");
-        }
-
-        return res.status(200).send(user);
-    }
-
-    static getUserInfoFromToken = async(req:Request, res:Response) =>{
-        const userAuth = <string>req.headers["auth"];
-
-        let user = {};
-
-        try{
-            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
-            user = {
-                userId: parseInt(jwtPayLoad.id), 
-                email: jwtPayLoad.email,
-                name: jwtPayLoad.name,
-                apartment: jwtPayLoad.apartment
-            }
-        }catch(error){
-            return res.status(401).send();
-        }
-
-        console.log(user);
-        return res.status(200).send(user);
-    }
-
     static newUser = async (req:Request,res:Response)=>{
         let {name, email, apartment, password} = req.body;
 
@@ -77,7 +36,20 @@ export class UserController {
 
         return res.status(201).send("User Created");
 
-    }
+    };
+
+    static getOneUserById = async (req:Request,res:Response)=>{
+        const id:any = req.params.id;
+
+        let user:User;
+        try{
+            user = await userRepository.findOneOrFail({where:{id}});
+        }catch(error){
+            return res.status(404).send("user not found");
+        }
+
+        return res.status(200).send(user);
+    };
 
     static editUser = async (req:Request, res:Response)=>{
         const id:any = req.params.id;
@@ -114,8 +86,39 @@ export class UserController {
 
         return res.status(200).send(user)
     
-    }
+    };
 
+    //Gets info from the authenticated user.
+    static getUserInfoFromToken = async(req:Request, res:Response) =>{
+        const userAuth = <string>req.headers["auth"];
+
+        let user = {};
+
+        try{
+            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
+            user = {
+                userId: parseInt(jwtPayLoad.id), 
+                email: jwtPayLoad.email,
+                name: jwtPayLoad.name,
+                apartment: jwtPayLoad.apartment
+            }
+        }catch(error){
+            return res.status(401).send();
+        }
+
+        console.log(user);
+        return res.status(200).send(user);
+    };
+
+    //Admin get all users to network adm.
+    static getAllUsers = async (req:Request, res:Response)=>{
+        const users = await userRepository.find();
+    
+        return res.status(200).send(users);
+    
+    };
+
+    //Admin only route to network adm.
     static deleteUser = async (req:Request, res:Response)=>{
         const id:any = req.params.id;
         
@@ -130,5 +133,5 @@ export class UserController {
         userRepository.delete(id);
 
         return res.status(204).send()
-    }
+    };
 };

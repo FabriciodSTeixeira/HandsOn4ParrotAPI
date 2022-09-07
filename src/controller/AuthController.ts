@@ -47,7 +47,7 @@ class AuthController {
     }
 
     static changePassword = async (req: Request, res: Response) => {
-        const id = res.locals.jwtPayload.userId
+        const id = res.locals.jwtPayload.id
 
         let {oldPassword, newPassword} = req.body
         if(!(oldPassword && newPassword)) {
@@ -57,7 +57,7 @@ class AuthController {
         let user: User
 
         try {
-            user = await userRepository.findOneOrFail({where: id})
+            user = await userRepository.findOneOrFail({where:{id}})
         } catch (error) {
             return res.status(401).send("User not found")
         }
@@ -71,10 +71,10 @@ class AuthController {
             return res.status(400).send(errors)
         }
 
-        newPassword = user.hashPassword()
-        
+    
         user.password = newPassword
-        
+        newPassword = user.hashPassword()
+    
         userRepository.save(user)
 
         return res.status(204).send("Password changed!")

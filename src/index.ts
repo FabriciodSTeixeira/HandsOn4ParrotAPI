@@ -8,7 +8,7 @@ import helmet from "helmet";
 
 
 //Chamando e iniciando o DB
-AppDataSource.initialize()
+    AppDataSource.initialize()
     .then(()=>{
         const app = express();
 
