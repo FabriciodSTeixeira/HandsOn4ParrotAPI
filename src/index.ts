@@ -8,9 +8,9 @@ import helmet from "helmet";
 
 
 //Chamando e iniciando o DB
-    AppDataSource.initialize()
-    .then(()=>{
-        const app = express();
+AppDataSource.initialize()
+.then(()=>{
+    const app = express();
 
         //call middlewares
         app.use(bodyParser.json());
