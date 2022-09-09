@@ -34,6 +34,12 @@ Melhorias quais estou em busca é a implementação de mais opções como a opç
 
 - 4 - Rodar o server com o comando `npm run dev`.
 
+- 5 - Criação de user "ADMIN" via SQL para utilização de rotas ADMIN-ONLY:
+
+ ``` INSERT INTO user(name,email,apartment,password,role) VALUES
+	('Admin', 'admin@admin.com', 000, "$2y$08$UN4W4gDrq8zCn22ggaY3AeNI7MVBoYifDDljWfGBDClovTGog1hca", "ADMIN");
+```
+
 
 ## O server possui as funcionalidades a seguir:
 
