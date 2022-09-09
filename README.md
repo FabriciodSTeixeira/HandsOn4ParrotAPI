@@ -1,5 +1,7 @@
 # Hands On 4  - Rede Social Parrot -
  
+ [Front Repository](https://github.com/pereirathalita/parrot)
+ 
  Grupo 4 - <br>
  [Fabrício Teixeira](https://github.com/FabriciodSTeixeira)<br>
  [Thalita](https://github.com/pereirathalita)<br>
