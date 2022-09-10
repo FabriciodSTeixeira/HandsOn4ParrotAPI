@@ -1,6 +1,16 @@
 # Hands On 4  - Rede Social Parrot -
  
+ [Front Repository](https://github.com/pereirathalita/parrot)
+ 
+ Grupo 4 - <br>
+ [Fabrício Teixeira](https://github.com/FabriciodSTeixeira)<br>
+ [Thalita](https://github.com/pereirathalita)<br>
+ 
+ 
 ![Gama Academy](https://storage.gama.academy/logo.svg)
+
+
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=API%20Rede%20Parrot&uri=https%3A%2F%2Fgithub.com%2FFabriciodSTeixeira%2FHandsOn4ParrotAPI%2Fblob%2Fmain%2Fdocs%2FInsomnia.json)
 
 
  Este projeto proposto pela equipe da Gama Academy durante o XP 43 consiste em criar uma rede social fictícia de um condomínio, dividindo a equipe em duas partes: Front-end e Back-end.
@@ -23,6 +33,12 @@ Melhorias quais estou em busca é a implementação de mais opções como a opç
 - 3 - Criar um schema vazio no MySQL.
 
 - 4 - Rodar o server com o comando `npm run dev`.
+
+- 5 - Criação de user "ADMIN" via SQL para utilização de rotas ADMIN-ONLY:
+
+ ``` INSERT INTO user(name,email,apartment,password,role) VALUES
+	('Admin', 'admin@admin.com', 000, "$2y$08$UN4W4gDrq8zCn22ggaY3AeNI7MVBoYifDDljWfGBDClovTGog1hca", "ADMIN");
+```
 
 
 ## O server possui as funcionalidades a seguir:
