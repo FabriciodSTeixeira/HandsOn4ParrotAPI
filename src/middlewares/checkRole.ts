@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
-import config from "../config/config";
 
 export const checkIfAdmin = (req:Request,res:Response, next:NextFunction)=>{
         const userAuth = <string>req.headers["auth"];
@@ -8,7 +7,7 @@ export const checkIfAdmin = (req:Request,res:Response, next:NextFunction)=>{
         let user = {};
 
         try{
-            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
+            const jwtPayLoad = <any>jwt.verify(userAuth, process.env.JWT_SECRET);
             user = {
                 id: jwtPayLoad.id, 
                 email: jwtPayLoad.email,

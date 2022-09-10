@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import { Post } from "../entity/Post";
 import { User } from "../entity/User";
 import { AppDataSource } from "../database/data-source";
-import config from "../config/config";
 
 const postRepository = AppDataSource.getRepository(Post);
 const userRepository = AppDataSource.getRepository(User);
@@ -27,16 +26,16 @@ export class PostController{
     static getAllPostsByUserId = async (req:Request, res:Response) =>{
         const userAuth = <string>req.headers["auth"];
 
-        let id
+        let idUser
 
         try{
-            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
-            id = jwtPayLoad.id
+            const jwtPayLoad = <any>jwt.verify(userAuth, process.env.JWT_SECRET);
+            idUser = jwtPayLoad.id
         }catch(error){
             return res.status(401).send();
         }
 
-        const user = userRepository.findOneOrFail({where:{id:id}})
+        const user = userRepository.findOneOrFail({where:{id:idUser}})
 
         if (!user){
             return res.status(404).send("User Not Found");
@@ -47,7 +46,7 @@ export class PostController{
             let posts = await postRepository.find({
                 where:{
                     user:{
-                        id:id
+                        id:idUser
                     }
                 }
             })
@@ -62,18 +61,18 @@ export class PostController{
     static newPost = async (req:Request, res:Response) =>{
         const userAuth = <string>req.headers["auth"];
 
-        let id;
+        let idUser;
 
         try{
-            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
-            id = jwtPayLoad.id
+            const jwtPayLoad = <any>jwt.verify(userAuth, process.env.JWT_SECRET);
+            idUser = jwtPayLoad.id
         }catch(error){
             return res.status(401).send();
         }
 
-        const user = await userRepository.findOneOrFail({where:{id : id}});
+        const user = await userRepository.findOneOrFail({where:{id : idUser}});
 
-        console.log(id);
+        console.log(idUser);
         const { content } = req.body;
 
         console.log(user);

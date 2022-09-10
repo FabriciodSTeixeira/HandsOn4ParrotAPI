@@ -3,7 +3,6 @@ import * as jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { User } from "../entity/User";
 import { AppDataSource } from "../database/data-source";
-import config from "../config/config";
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -14,6 +13,9 @@ export class UserController {
 
         let user : User = new User();
 
+        if(typeof password != "string" ){
+            return res.status(404).send("Invalid type of parameters on request!")
+        }
         
         user.name = name;
         user.email = email;
@@ -21,12 +23,12 @@ export class UserController {
         user.password = password;
         user.role = "MORADOR";
 
-        user.hashPassword();
-
         const validationErrors = await validate(user)
         if(validationErrors.length >0){
             return res.status(400).send(validationErrors);
         };
+
+        user.hashPassword();
 
         try{
             await userRepository.save(user);
@@ -95,7 +97,7 @@ export class UserController {
         let user = {};
 
         try{
-            const jwtPayLoad = <any>jwt.verify(userAuth, config.jwtSecret);
+            const jwtPayLoad = <any>jwt.verify(userAuth, process.env.JWT_SECRET);
             user = {
                 userId: parseInt(jwtPayLoad.id), 
                 email: jwtPayLoad.email,

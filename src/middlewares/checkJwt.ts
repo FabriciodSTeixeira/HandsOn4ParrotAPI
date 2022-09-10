@@ -1,6 +1,5 @@
 import {Request, Response, NextFunction} from "express";
 import * as jwt from "jsonwebtoken";
-import config from "../config/config";
 
 
 export const checkJwt = (req:Request, res:Response, next:NextFunction) =>{
@@ -8,7 +7,7 @@ export const checkJwt = (req:Request, res:Response, next:NextFunction) =>{
     let jwtPayLoad
 
     try{
-        jwtPayLoad = <any>jwt.verify(token, config.jwtSecret)
+        jwtPayLoad = <any>jwt.verify(token, process.env.JWT_SECRET)
         res.locals.jwtPayload = jwtPayLoad
     }catch(error:any){
         return res.status(401).send()
@@ -16,7 +15,7 @@ export const checkJwt = (req:Request, res:Response, next:NextFunction) =>{
 
     
     const {id, email} = jwtPayLoad;
-    const newToken = jwt.sign({id, email}, config.jwtSecret, {
+    const newToken = jwt.sign({id, email}, process.env.JWT_SECRET, {
         expiresIn: "1h"
     })
 

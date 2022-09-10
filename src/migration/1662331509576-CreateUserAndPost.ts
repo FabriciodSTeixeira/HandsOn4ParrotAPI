@@ -18,12 +18,12 @@ export class CreateUserAndPost1662331509576 implements MigrationInterface {
                   },
                   {
                     name:"name",
-                    type:"varchar",
+                    type:"varchar(70)",
                     isNullable:false,
                   },
                   {
                     name:"email",
-                    type:"varchar",
+                    type:"varchar(70)",
                     isNullable:false,
                   },
                   {
@@ -33,7 +33,7 @@ export class CreateUserAndPost1662331509576 implements MigrationInterface {
                   },
                   {
                     name:"password",
-                    type:"varchar",
+                    type:"varchar(120)",
                     isNullable:false,
                   },
                   {

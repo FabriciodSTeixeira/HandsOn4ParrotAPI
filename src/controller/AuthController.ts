@@ -3,7 +3,6 @@ import * as jwt from "jsonwebtoken";
 import { AppDataSource } from "../database/data-source";
 
 import { User } from "../entity/User";
-import config from "../config/config";
 import { validate } from "class-validator";
 
 const userRepository = AppDataSource.getRepository(User);
@@ -11,12 +10,15 @@ const userRepository = AppDataSource.getRepository(User);
 class AuthController {
 
     static login = async (req: Request, res: Response) => {
-        let {email, password} = req.body
+        let {email, password} = req.body;
 
         const isValidUser = await userRepository.findOneBy({email});
 
         if(!(isValidUser && password)) {
             return res.status(404).send()
+        }
+        if(typeof password != "string" ){
+            return res.status(404).send("Invalid type of parameters on request!")
         }
 
         let user: User
@@ -39,11 +41,19 @@ class AuthController {
             apartment: user.apartment,
             role: user.role
         },
-            config.jwtSecret,
+            process.env.JWT_SECRET,
             {expiresIn: "1h"}
         )
 
-        return res.send(token)
+        const userResponse = {
+            id: user.id, 
+            email: user.email,
+            name: user.name,
+            apartment: user.apartment,
+        };
+        const response = {token, userResponse}
+
+        return res.send(response)
     }
 
     static changePassword = async (req: Request, res: Response) => {

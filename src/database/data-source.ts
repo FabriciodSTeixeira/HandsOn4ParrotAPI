@@ -10,8 +10,8 @@ dotenv.config();
 
 const options: DataSourceOptions & SeederOptions = {
     type: "mysql",
-    host: "localhost",
-    port : 3306,
+    host: process.env.HOST,
+    port : parseInt(process.env.DB_PORT),
     username: process.env.DB_USERNAME,
     password: process.env.DB_KEY,
     database: process.env.DB_NAME,
